@@ -16,11 +16,11 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## cPanel Login Details
-https://sharelearnteach.com:2083/
-sharel1
-R0bjhbv8w4ny5@#4dftu
+- https://sharelearnteach.com:2083/
+- sharel1
+- R0bjhbv8w4ny5@#4dftu
 
 ## Wordpress Login Details
-https://sharelearnteach.com/wp-admin/
-RobertStevens
-Rob5@W3bpr355
+- https://sharelearnteach.com/wp-admin/
+- RobertStevens
+- Rob5@W3bpr355
