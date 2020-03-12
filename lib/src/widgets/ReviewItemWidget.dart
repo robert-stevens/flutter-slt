@@ -38,7 +38,7 @@ class ReviewItemWidget extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              review.user.name,
+                              review.user.displayName,
                               overflow: TextOverflow.fade,
                               softWrap: false,
                               maxLines: 2,

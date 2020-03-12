@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:listing/config/ui_icons.dart';
 import 'package:listing/src/models/utilities.dart';
 import 'package:listing/src/widgets/EmptyFavoritesWidget.dart';
@@ -9,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:listing/src/widgets/DrawerWidget.dart';
 import 'package:listing/src/widgets/FilterWidget.dart';
+import 'package:listing/src/models/user.dart';
 
 class ResourcesWidget extends StatefulWidget {
   @override
@@ -16,11 +19,20 @@ class ResourcesWidget extends StatefulWidget {
 }
 
 class _ResourcesWidgetState extends State<ResourcesWidget> {
+
+  _ResourcesWidgetState() {
+    User().getUser().then((val) => setState(() {
+      _profilePicture = val.avatar;
+    }));
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  // CategoriesList _categoriesList = new CategoriesList();
-  // SubCategoriesList _subCategoriesList = new SubCategoriesList();
   String layout = 'list';
   final UtilitiesList _utilitiesList = UtilitiesList();
+  bool loading = true;
+
+  User _user;
+  String _profilePicture;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +62,9 @@ class _ResourcesWidgetState extends State<ResourcesWidget> {
                 onTap: () {
                   Navigator.of(context).pushNamed('/Account');
                 },
-                child: const CircleAvatar(
-                  backgroundImage: AssetImage('img/user2.jpg'),
-                ),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(_profilePicture),
+                )
               )),
         ],
       ),
@@ -65,7 +77,7 @@ class _ResourcesWidgetState extends State<ResourcesWidget> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SearchBarWidget(),
+            child: const SearchBarWidget(),
           ),
           const SizedBox(height: 20),
           // Offstage(

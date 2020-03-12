@@ -46,9 +46,9 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                           style: TextStyle(color: Theme.of(context).hintColor),
                           keyboardType: TextInputType.text,
                           decoration: getInputDecoration(hintText: 'John Doe', labelText: 'Full Name'),
-                          initialValue: widget.user.name,
+                          initialValue: widget.user.displayName,
                           validator: (input) => input.trim().length < 3 ? 'Not a valid full name' : null,
-                          onSaved: (input) => widget.user.name = input,
+                          onSaved: (input) => widget.user.displayName = input,
                         ),
                         new TextFormField(
                           style: TextStyle(color: Theme.of(context).hintColor),

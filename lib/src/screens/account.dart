@@ -83,7 +83,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          _user.name,
+                          _user.displayName,
                           textAlign: TextAlign.left,
                           style: Theme.of(context).textTheme.display2,
                         ),
@@ -214,7 +214,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                       style: Theme.of(context).textTheme.body1,
                     ),
                     trailing: Text(
-                      _user.name,
+                      _user.displayName,
                       style: TextStyle(color: Theme.of(context).focusColor),
                     ),
                   ),
