@@ -1,9 +1,24 @@
 import 'package:listing/config/ui_icons.dart';
 import 'package:listing/src/models/user.dart';
 import 'package:flutter/material.dart';
-// ignore: must_be_immutable
-class DrawerWidget extends StatelessWidget {
-  final User _user = User.init().getCurrentUser();
+
+
+
+class DrawerWidget extends StatefulWidget {
+  @override
+  _DrawerWidgetState createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+
+  _DrawerWidgetState() {
+    User().getUser().then((val) => setState(() {
+      _user = val;
+    }));
+  }
+
+  User _user;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,7 +34,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Theme.of(context).hintColor.withOpacity(0.1),
               ),
               accountName: Text(
-                _user.name,
+                _user.displayName,
                 style: Theme.of(context).textTheme.title,
               ),
               accountEmail: Text(
@@ -28,7 +43,7 @@ class DrawerWidget extends StatelessWidget {
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Theme.of(context).accentColor,
-                backgroundImage: AssetImage(_user.avatar),
+                backgroundImage: NetworkImage(_user.avatar),
               ),
             ),
           ),
@@ -135,7 +150,8 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {
+            onTap: () async {
+              await _user.logout();
               Navigator.of(context).pushNamed('/SignIn');
             },
             leading: Icon(
