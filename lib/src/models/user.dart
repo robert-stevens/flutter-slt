@@ -35,7 +35,7 @@ class User {
       displayName: json['user']['display_name'],
       email: json['user']['email'],
       avatar: json['user']['avatar'],
-      token: json['user']['token'],
+      token: json['token']['jwt_token'],
     );
   }
 
