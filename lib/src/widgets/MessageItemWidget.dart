@@ -38,7 +38,7 @@ class _MessageItemWidgetState extends State<MessageItemWidget> {
 
         // Then show a snackbar.
         Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text("The conversation with ${widget.message.user.name} is dismissed")));
+            .showSnackBar(SnackBar(content: Text("The conversation with ${widget.message.user.displayName} is dismissed")));
       },
       child: InkWell(
         onTap: () {
@@ -82,7 +82,7 @@ class _MessageItemWidgetState extends State<MessageItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      this.widget.message.user.name,
+                      this.widget.message.user.displayName,
                       overflow: TextOverflow.fade,
                       softWrap: false,
                       style: Theme.of(context).textTheme.body2,
