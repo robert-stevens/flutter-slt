@@ -1,5 +1,5 @@
-import 'package:listing/config/app_config.dart' as config;
-import 'package:listing/config/ui_icons.dart';
+import 'package:shareLearnTeach/config/app_config.dart' as config;
+import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:flutter/material.dart';
 
 class EmptyFavoritesWidget extends StatelessWidget {

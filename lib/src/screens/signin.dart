@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/widgets/SocialMediaWidget.dart';
-import 'package:listing/src/models/user.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+// import 'package:shareLearnTeach/src/widgets/SocialMediaWidget.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
+import 'package:shareLearnTeach/src/screens/web_view.dart';
 
 class SignInWidget extends StatefulWidget {
   @override
@@ -10,26 +14,55 @@ class SignInWidget extends StatefulWidget {
 }
 
 class _SignInWidgetState extends State<SignInWidget> {
+  bool _isLoading = false;
   bool _showPassword = false;
   String _email;
   String _password;
+  String _error;
   final User user = User();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // SnackBar _snackBar;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void _handleLogin() async {
+  void _handleLogin(BuildContext content) async {
 
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
 
+      setState(() {
+        _isLoading =  true;
+      });
+
       //for testing
-      _email = 'RobertStevens';
-      _password = 'Rob5@W3bpr355';
+      // _email = 'RobertStevens';
+      // _password = 'Rob5@W3bpr355';
+      // _email = 'flinders';
+      // _password = '5t3V3n@5t';
 
       final dynamic response = await user.loginUser(_email, _password);
-      if(response != null){
-         Navigator.of(context).pushNamed('/Resources');
+      if(response.statusCode == 200){
+
+        await Category.getAndSaveCategories();
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pushNamed('/Resources');
       } else {
+        // print('error: ${response.body}');
+        // print('error_description: ${response.body['error_description']}');
+        // print('error_description: ${response.body.error_description}');
+
+        final dynamic error = json.decode(response.body as String);
+
+        setState(() {
+          _isLoading = false;
+          _error = error['error_description'] as String;
+        });
         // inform user of login error.
+        // _snackBar = SnackBar(content: Text(error['error_description']));
+
+        // // Find the Scaffold in the widget tree and use it to show a SnackBar.
+        // Scaffold.of(context).showSnackBar(_snackBar);
       }
     } else {
       // handle form errors
@@ -37,19 +70,27 @@ class _SignInWidgetState extends State<SignInWidget> {
 
   }
 
+  void _openMembershipPage(){
+    Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (BuildContext context) {
+      return const WebViewWebPage(title: 'Upgrade Now', url: 'https://sharelearnteach.com/membership-account/membership-levels/');
+    }));
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Theme.of(context).accentColor,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 50),
+            const SizedBox(height: 85),
             Stack(
               children: <Widget>[
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  margin: const EdgeInsets.symmetric(vertical: 65, horizontal: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).primaryColor,
@@ -69,11 +110,11 @@ class _SignInWidgetState extends State<SignInWidget> {
                           style: TextStyle(color: Theme.of(context).focusColor),
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (String value) {
-                            print(value);
+                            // print(value);
                             _email = value;
                           },
                           decoration: InputDecoration(
-                            hintText: 'Email Address',
+                            hintText: 'Username / Email Address',
                             hintStyle: Theme.of(context).textTheme.body1.merge(
                                   TextStyle(color: Theme.of(context).focusColor.withOpacity(0.6)),
                                 ),
@@ -120,18 +161,28 @@ class _SignInWidgetState extends State<SignInWidget> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        FlatButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Forgot your password ?',
-                            style: Theme.of(context).textTheme.body1,
-                          ),
-                        ),
+                        // FlatButton(
+                        //   onPressed: () {},
+                        //   child: Text(
+                        //     'Forgot your password ?',
+                        //     style: Theme.of(context).textTheme.body1,
+                        //   ),
+                        // ),
+                        // FlatButton(
+                        //   onPressed: () {},
+                        //   child: Text(
+                        //     'Forgot your password ?',
+                        //     style: Theme.of(context).textTheme.body1,
+                        //   ),
+                        // ),
+                        _error != null && _error.isNotEmpty ? Text(_error, style: TextStyle(color: Colors.red),) : Text(''),
                         const SizedBox(height: 30),
-                        FlatButton(
+                        _isLoading ? 
+                          const Center(child: CircularProgressIndicator())
+                        : FlatButton(
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 70),
                           onPressed: () {
-                            _handleLogin();
+                            _handleLogin(context);
                           },
                           child: Text(
                             'Login',
@@ -142,7 +193,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                           color: Theme.of(context).accentColor,
                           shape: const StadiumBorder(),
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 20),
                         // Text(
                         //   'Or using social media',
                         //   style: Theme.of(context).textTheme.body1,
@@ -157,7 +208,7 @@ class _SignInWidgetState extends State<SignInWidget> {
             ),
             FlatButton(
               onPressed: () {
-                Navigator.of(context).pushNamed('/SignUp');
+                _openMembershipPage();
               },
               child: RichText(
                 text: TextSpan(
@@ -165,7 +216,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                         TextStyle(color: Theme.of(context).primaryColor),
                       ),
                   children: [
-                    TextSpan(text: 'Don\'t have an account ?'),
+                    const TextSpan(text: 'Don\'t have an account ?'),
                     TextSpan(text: ' Sign Up', style: TextStyle(fontWeight: FontWeight.w700)),
                   ],
                 ),

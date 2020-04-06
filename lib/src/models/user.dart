@@ -6,13 +6,36 @@ import 'package:intl/intl.dart' show DateFormat;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:listing/src/util/strings.dart';
+import 'package:shareLearnTeach/src/utils/constants.dart';
 
 enum UserState { available, away, busy }
 
 class User {
 
-  User({this.id, this.displayName, this.email, this.avatar, this.token});
+  User({this.id, this.displayName, this.email, this.avatar, this.token, this.membershipLevel});
+
+  factory User.fromLoginJson(Map<String, dynamic> json) {
+    print('user json: $json');
+    return User(
+      id: json['user']['id'],
+      displayName: json['user']['display_name'],
+      email: json['user']['email'],
+      avatar: json['user']['avatar'],
+      token: json['token']['jwt_token'],
+      membershipLevel: json['user']['membership_level'],
+    );
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      displayName: json['displayName'],
+      email: json['email'],
+      avatar: json['avatar'],
+      token: json['token'],
+      membershipLevel: json['membership_level'],
+    );
+  }
 
   User.init();
 
@@ -26,30 +49,12 @@ class User {
       'displayName': displayName,
       'email': email,
       'avatar': avatar,
+      'token': token,
+      'membership_level': membershipLevel
     };
   }
 
-  factory User.fromLoginJson(Map<String, dynamic> json) {
-    return User(
-      id: json['user']['id'],
-      displayName: json['user']['display_name'],
-      email: json['user']['email'],
-      avatar: json['user']['avatar'],
-      token: json['token']['jwt_token'],
-    );
-  }
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      displayName: json['displayName'],
-      email: json['email'],
-      avatar: json['avatar'],
-      token: json['token'],
-    );
-  }
-
-  Future<User> loginUser(String username, String password) async {
+  Future<http.Response> loginUser(String username, String password) async {
     final http.Response response = await http.post(_apiEndpoint, headers: _headers, body: json.encode({'username': username, 'password': password}));
 
     // print(response.statusCode);
@@ -59,28 +64,42 @@ class User {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       final User user = User.fromLoginJson(json.decode(response.body));
-      // print(user);
+      print(user);
 
       final SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString('user', json.encode(user.toMap()));
 
-      return user;
+      return response;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to login user');
+      // print('response: ${response.body}');
+      return response;
+      // throw Exception('Failed to login user');
     }
   }
 
   Future<User> getUser() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     final dynamic user = json.decode(preferences.getString('user'));
-
-    print(user);
-    print('from json');
-    print(User.fromJson(user));
     
     return User.fromJson(user);
+  }
+
+  static Future<String> getToken() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final dynamic user = json.decode(preferences.getString('user'));
+    final User userToken = User.fromJson(user);
+
+    // print('getToken');
+    // print(user);
+    print(User.fromJson(user));
+
+    if(userToken.token != null){
+      return userToken.token;
+    }
+    
+    return '';
   }
 
   Future<bool> logout() async {
@@ -90,13 +109,14 @@ class User {
     return true;
   }
 
-  static const String _apiEndpoint = Strings.apiUrl+'api/v1/token';
+  static const String _apiEndpoint = Constants.WORDPRESS_URL+'api/v1/token';
   static final Object _headers = {'Content-Type': 'application/json'};
 
   int id;
   String displayName;
   String email;
   String gender;
+  String membershipLevel;
   DateTime dateOfBirth;
   String avatar;
   String address;

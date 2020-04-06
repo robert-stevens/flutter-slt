@@ -1,8 +1,8 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/product_color.dart';
-import 'package:listing/src/widgets/PopularLocationCarouselWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/product_color.dart';
+import 'package:shareLearnTeach/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:listing/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
 // ignore: must_be_immutable
 class UtilitieHomeTabWidget extends StatefulWidget {
   Utilitie utilitie;

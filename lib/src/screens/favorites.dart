@@ -1,9 +1,9 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/widgets/EmptyFavoritesWidget.dart';
-import 'package:listing/src/widgets/FavoriteListItemWidget.dart';
-import 'package:listing/src/widgets/UtilitiesGridItemWidget.dart';
-import 'package:listing/src/widgets/SearchBarWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/widgets/EmptyFavoritesWidget.dart';
+import 'package:shareLearnTeach/src/widgets/FavoriteListItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/UtilitiesGridItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 

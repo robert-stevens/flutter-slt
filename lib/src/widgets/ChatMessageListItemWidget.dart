@@ -1,5 +1,5 @@
-import 'package:listing/src/models/chat.dart';
-import 'package:listing/src/models/user.dart';
+import 'package:shareLearnTeach/src/models/chat.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
 import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class ChatMessageListItem extends StatelessWidget {
@@ -18,7 +18,7 @@ class ChatMessageListItem extends StatelessWidget {
     );
   }
 
-  Widget getSentMessageLayout(context) {
+  Widget getSentMessageLayout(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
@@ -59,7 +59,7 @@ class ChatMessageListItem extends StatelessWidget {
     );
   }
 
-  Widget getReceivedMessageLayout(context) {
+  Widget getReceivedMessageLayout(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(

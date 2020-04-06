@@ -1,6 +1,6 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/widgets/PopularLocationCarouselWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:flutter/material.dart';
 
 class UtilitiesDetailsTabWidget extends StatefulWidget {
@@ -92,7 +92,7 @@ class _SelectColorWidgetState extends State<SelectColorWidget> {
     );
   }
 
-  SizedBox buildColor(color, selectedColor) {
+  SizedBox buildColor(Color color, Color selectedColor) {
     return SizedBox(
       width: 38,
       height: 38,

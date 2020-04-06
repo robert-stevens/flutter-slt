@@ -1,5 +1,5 @@
-import 'package:listing/src/models/review.dart';
-import 'package:listing/src/widgets/ReviewItemWidget.dart';
+import 'package:shareLearnTeach/src/models/review.dart';
+import 'package:shareLearnTeach/src/widgets/ReviewItemWidget.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

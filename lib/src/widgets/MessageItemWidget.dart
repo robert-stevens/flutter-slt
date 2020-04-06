@@ -1,6 +1,6 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/conversation.dart' as model;
-import 'package:listing/src/models/user.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/conversation.dart' as model;
+import 'package:shareLearnTeach/src/models/user.dart';
 import 'package:flutter/material.dart';
 
 class MessageItemWidget extends StatefulWidget {

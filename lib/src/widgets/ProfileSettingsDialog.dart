@@ -1,6 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/user.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -21,9 +21,9 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        showDialog(
+        showDialog<dynamic>(
             context: context,
-            builder: (context) {
+            builder: (BuildContext context) {
               return SimpleDialog(
                 contentPadding: EdgeInsets.symmetric(horizontal: 20),
                 titlePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),

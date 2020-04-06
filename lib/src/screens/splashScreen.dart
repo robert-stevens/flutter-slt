@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listing/src/screens/on_boarding.dart';
+import 'package:shareLearnTeach/src/screens/on_boarding.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 class Splash extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:listing/config/ui_icons.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarHomeWidget extends StatelessWidget {

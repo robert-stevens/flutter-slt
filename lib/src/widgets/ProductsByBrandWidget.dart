@@ -1,9 +1,9 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/category.dart';
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/widgets/FavoriteListItemWidget.dart';
-import 'package:listing/src/widgets/UtilitiesGridItemWidget.dart';
-import 'package:listing/src/widgets/SearchBarWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/widgets/FavoriteListItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/UtilitiesGridItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 // ignore: must_be_immutable
@@ -70,52 +70,52 @@ class _UtilitiesByBrandWidgetState extends State<UtilitiesByBrandWidget> {
             ),
           ),
         ),
-        Offstage(
-          offstage: this.layout != 'list',
-          child: ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            primary: false,
-            itemCount: widget.category.utilities.length,
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 10);
-            },
-            itemBuilder: (context, index) {
-              return FavoriteListItemWidget(
-                heroTag: 'Utilities_by_category_list',
-                utilitie: widget.category.utilities.elementAt(index),
-                onDismissed: () {
-                  setState(() {
-                    widget.category.utilities.removeAt(index);
-                  });
-                },
-              );
-            },
-          ),
-        ),
-        Offstage(
-          offstage: this.layout != 'grid',
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: new StaggeredGridView.countBuilder(
-              primary: false,
-              shrinkWrap: true,
-              crossAxisCount: 4,
-              itemCount: widget.category.utilities.length,
-              itemBuilder: (BuildContext context, int index) {
-                Utilitie utilitie = widget.category.utilities.elementAt(index);
-                return UtilitietGridItemWidget(
-                  utilitie: utilitie,
-                  heroTag: 'Utilities_by_category_grid',
-                );
-              },
-//                  staggeredTileBuilder: (int index) => new StaggeredTile.fit(index % 2 == 0 ? 1 : 2),
-              staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
-              mainAxisSpacing: 15.0,
-              crossAxisSpacing: 15.0,
-            ),
-          ),
-        ),
+//         Offstage(
+//           offstage: this.layout != 'list',
+//           child: ListView.separated(
+//             scrollDirection: Axis.vertical,
+//             shrinkWrap: true,
+//             primary: false,
+//             itemCount: widget.category.utilities.length,
+//             separatorBuilder: (context, index) {
+//               return SizedBox(height: 10);
+//             },
+//             itemBuilder: (context, index) {
+//               return FavoriteListItemWidget(
+//                 heroTag: 'Utilities_by_category_list',
+//                 utilitie: widget.category.utilities.elementAt(index),
+//                 onDismissed: () {
+//                   setState(() {
+//                     widget.category.utilities.removeAt(index);
+//                   });
+//                 },
+//               );
+//             },
+//           ),
+//         ),
+//         Offstage(
+//           offstage: this.layout != 'grid',
+//           child: Container(
+//             padding: EdgeInsets.symmetric(horizontal: 20),
+//             child: new StaggeredGridView.countBuilder(
+//               primary: false,
+//               shrinkWrap: true,
+//               crossAxisCount: 4,
+//               itemCount: widget.category.utilities.length,
+//               itemBuilder: (BuildContext context, int index) {
+//                 Utilitie utilitie = widget.category.utilities.elementAt(index);
+//                 return UtilitietGridItemWidget(
+//                   utilitie: utilitie,
+//                   heroTag: 'Utilities_by_category_grid',
+//                 );
+//               },
+// //                  staggeredTileBuilder: (int index) => new StaggeredTile.fit(index % 2 == 0 ? 1 : 2),
+//               staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
+//               mainAxisSpacing: 15.0,
+//               crossAxisSpacing: 15.0,
+//             ),
+//           ),
+//         ),
       ],
     );
   }

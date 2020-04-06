@@ -1,7 +1,7 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/category.dart';
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/widgets/PopularLocationCarouselWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class BrandHomeTabWidget extends StatefulWidget {

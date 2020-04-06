@@ -1,10 +1,10 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/category.dart';
-import 'package:listing/src/models/route_argument.dart';
-import 'package:listing/src/widgets/BrandHomeTabWidget.dart';
-import 'package:listing/src/widgets/DrawerWidget.dart';
-import 'package:listing/src/widgets/ProductsByBrandWidget.dart';
-import 'package:listing/src/widgets/ShoppingCartButtonWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
+import 'package:shareLearnTeach/src/models/route_argument.dart';
+import 'package:shareLearnTeach/src/widgets/BrandHomeTabWidget.dart';
+import 'package:shareLearnTeach/src/widgets/DrawerWidget.dart';
+import 'package:shareLearnTeach/src/widgets/ProductsByBrandWidget.dart';
+import 'package:shareLearnTeach/src/widgets/ShoppingCartButtonWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -37,7 +37,7 @@ class _CategorieWidgetState extends State<CategorieWidget> with SingleTickerProv
     super.dispose();
   }
 
-  _handleTabSelection() {
+  void _handleTabSelection() {
     if (_tabController.indexIsChanging) {
       setState(() {
         _tabIndex = _tabController.index;

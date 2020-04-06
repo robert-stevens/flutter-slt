@@ -1,7 +1,7 @@
-import 'package:listing/src/models/notification.dart' as model;
-import 'package:listing/src/widgets/EmptyNotificationsWidget.dart';
-import 'package:listing/src/widgets/NotificationItemWidget.dart';
-import 'package:listing/src/widgets/SearchBarWidget.dart';
+import 'package:shareLearnTeach/src/models/notification.dart' as model;
+import 'package:shareLearnTeach/src/widgets/EmptyNotificationsWidget.dart';
+import 'package:shareLearnTeach/src/widgets/NotificationItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarWidget.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsWidget extends StatefulWidget {

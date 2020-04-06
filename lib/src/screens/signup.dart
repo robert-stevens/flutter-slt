@@ -1,5 +1,5 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/widgets/SocialMediaWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/widgets/SocialMediaWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

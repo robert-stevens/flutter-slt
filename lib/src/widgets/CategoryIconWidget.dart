@@ -1,4 +1,4 @@
-import 'package:listing/src/models/category.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
 import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CategoryIconWidget extends StatefulWidget {

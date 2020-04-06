@@ -1,4 +1,4 @@
-import 'package:listing/src/models/language.dart';
+import 'package:shareLearnTeach/src/models/language.dart';
 import 'package:flutter/material.dart';
 
 class LanguageItemWidget extends StatefulWidget {

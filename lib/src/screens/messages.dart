@@ -1,7 +1,7 @@
-import 'package:listing/src/models/conversation.dart' as model;
-import 'package:listing/src/widgets/EmptyMessagesWidget.dart';
-import 'package:listing/src/widgets/MessageItemWidget.dart';
-import 'package:listing/src/widgets/SearchBarWidget.dart';
+import 'package:shareLearnTeach/src/models/conversation.dart' as model;
+import 'package:shareLearnTeach/src/widgets/EmptyMessagesWidget.dart';
+import 'package:shareLearnTeach/src/widgets/MessageItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarWidget.dart';
 import 'package:flutter/material.dart';
 
 class MessagesWidget extends StatefulWidget {

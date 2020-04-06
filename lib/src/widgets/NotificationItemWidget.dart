@@ -1,5 +1,5 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/notification.dart' as model;
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/notification.dart' as model;
 import 'package:flutter/material.dart';
 
 class NotificationItemWidget extends StatefulWidget {

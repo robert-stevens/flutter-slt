@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/conversation.dart';
-import 'package:listing/src/models/chat.dart';
-import 'package:listing/src/models/user.dart';
-import 'package:listing/src/widgets/ChatMessageListItemWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/conversation.dart';
+import 'package:shareLearnTeach/src/models/chat.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
+import 'package:shareLearnTeach/src/widgets/ChatMessageListItemWidget.dart';
 import 'package:flutter/material.dart';
 
 class ChatWidget extends StatefulWidget {

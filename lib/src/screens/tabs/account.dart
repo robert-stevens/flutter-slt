@@ -1,7 +1,7 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/user.dart';
-import 'package:listing/src/widgets/ProfileSettingsDialog.dart';
-import 'package:listing/src/widgets/SearchBarWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
+import 'package:shareLearnTeach/src/widgets/ProfileSettingsDialog.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarWidget.dart';
 import 'package:flutter/material.dart';
 
 class AccountWidget extends StatefulWidget {
