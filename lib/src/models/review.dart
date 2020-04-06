@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:listing/src/models/user.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 

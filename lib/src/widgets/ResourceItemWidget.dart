@@ -1,16 +1,20 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/resource.dart';
 import 'package:flutter/material.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/resource.dart';
 
 // ignore: must_be_immutable
 class ResourceItemWidget extends StatelessWidget {
+  ResourceItemWidget({Key key, this.resource, this.checkAccountPermissions}) : super(key: key);
+
   Resource resource;
 
-  ResourceItemWidget({Key key, this.resource}) : super(key: key);
+  Function checkAccountPermissions;
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return InkWell(
+      onTap: () async {checkAccountPermissions(resource, context);},
+      child:Wrap(
       direction: Axis.horizontal,
       runSpacing: 10,
       children: <Widget>[
@@ -95,7 +99,7 @@ class ResourceItemWidget extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              resource.getDateTime(),
+              resource.dateTime,
               style: Theme.of(context).textTheme.caption,
               overflow: TextOverflow.fade,
               softWrap: false,
@@ -131,6 +135,6 @@ class ResourceItemWidget extends StatelessWidget {
           ],
         ),
       ],
-    );
+    ));
   }
 }

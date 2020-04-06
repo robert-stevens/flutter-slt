@@ -1,5 +1,5 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/review.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/review.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:listing/config/ui_icons.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingCartButtonWidget extends StatelessWidget {

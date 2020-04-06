@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:listing/src/models/slider.dart';
-import 'package:listing/src/models/slider.dart' as prefix0;
+import 'package:shareLearnTeach/src/models/slider.dart';
+import 'package:shareLearnTeach/src/models/slider.dart' as prefix0;
 import 'package:flutter/material.dart';
 
 class HomeSliderWidget extends StatefulWidget {

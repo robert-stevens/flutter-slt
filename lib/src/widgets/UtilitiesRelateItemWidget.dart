@@ -1,5 +1,5 @@
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/models/route_argument.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/models/route_argument.dart';
 import 'package:flutter/material.dart';
 
 class UtilitieRelateItemWidget extends StatelessWidget {

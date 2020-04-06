@@ -1,16 +1,16 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/category.dart';
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/widgets/CategoriesIconsContainerWidget.dart';
-import 'package:listing/src/widgets/CategorizedUtilitiesWidget.dart';
-import 'package:listing/src/widgets/HomeSliderWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+// import 'package:shareLearnTeach/src/widgets/CategoriesIconsContainerWidget.dart';
+import 'package:shareLearnTeach/src/widgets/CategorizedUtilitiesWidget.dart';
+import 'package:shareLearnTeach/src/widgets/HomeSliderWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:listing/src/widgets/PopularLocationCarouselWidget.dart';
-import 'package:listing/src/widgets/SearchBarHomeWidget.dart';
-//import 'package:listing/src/widgets/BrandsIconsCarouselWidget.dart';
-//import 'package:listing/src/widgets/FlashSalesCarouselWidget.dart';
-//import 'package:listing/src/widgets/FlashSalesWidget.dart';
-//import 'package:listing/src/models/brand.dart';
+import 'package:shareLearnTeach/src/widgets/PopularLocationCarouselWidget.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarHomeWidget.dart';
+//import 'package:shareLearnTeach/src/widgets/BrandsIconsCarouselWidget.dart';
+//import 'package:shareLearnTeach/src/widgets/FlashSalesCarouselWidget.dart';
+//import 'package:shareLearnTeach/src/widgets/FlashSalesWidget.dart';
+//import 'package:shareLearnTeach/src/models/brand.dart';
 //import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -21,7 +21,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateMixin {
   List<Utilitie> _utilitiesOfCategoryList;
   List<Utilitie> _utilitiesfBrandList;
-  CategoriesList _categoriesList = new CategoriesList();
+  // CategoriesList _categoriesList = new CategoriesList();
   UtilitiesList _utilitiesList = new UtilitiesList();
 
   Animation animationOpacity;
@@ -38,9 +38,9 @@ class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateM
 
     animationController.forward();
 
-    _utilitiesOfCategoryList = _categoriesList.list.firstWhere((category) {
-      return category.selected;
-    }).utilities;
+    // _utilitiesOfCategoryList = _categoriesList.list.firstWhere((category) {
+    //   return category.selected;
+    // }).utilities;
 
     //_utilitiesfBrandList = _brandsList.list.firstWhere((brand) {
       //return brand.selected;
@@ -63,10 +63,10 @@ class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateM
             ),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.only(right: 2,left: 2),
-            child: CategoriesIconsContainerWidget(categoriesList: _categoriesList,)
-          ),
+          // Container(
+          //   padding: const EdgeInsets.only(right: 2,left: 2),
+          //   child: CategoriesIconsContainerWidget(categoriesList: _categoriesList,)
+          // ),
           Padding( 
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child:Column(

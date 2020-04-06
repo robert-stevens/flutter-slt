@@ -1,10 +1,14 @@
-import 'package:listing/config/ui_icons.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatelessWidget {
+  final Function onSearch;
+
   const SearchBarWidget({
     Key key,
+    this.onSearch
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +27,7 @@ class SearchBarWidget extends StatelessWidget {
               children: <Widget>[
                 TextField(
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(12),
+                    contentPadding: const EdgeInsets.all(12),
                     hintText: 'Search',
                     hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.8)),
                     prefixIcon: Icon(UiIcons.loupe, size: 20, color: Theme.of(context).hintColor),
@@ -31,9 +35,10 @@ class SearchBarWidget extends StatelessWidget {
                     enabledBorder: const UnderlineInputBorder(borderSide: BorderSide.none),
                     focusedBorder: const UnderlineInputBorder(borderSide: BorderSide.none),
                   ),
+                  onChanged: onSearch
                 ),
                 IconButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Scaffold.of(context).openEndDrawer();
                   },
                   icon: Icon(UiIcons.settings_2, size: 20, color: Theme.of(context).hintColor.withOpacity(0.5)),

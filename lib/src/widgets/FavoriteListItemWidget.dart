@@ -1,6 +1,6 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/models/route_argument.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/models/route_argument.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

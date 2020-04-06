@@ -1,12 +1,12 @@
-import 'package:listing/config/ui_icons.dart';
-import 'package:listing/src/screens/tabs/account.dart';
-import 'package:listing/src/screens/chat.dart';
-import 'package:listing/src/screens/favorites.dart';
-import 'package:listing/src/screens/home.dart';
-import 'package:listing/src/screens/messages.dart';
-import 'package:listing/src/screens/notifications.dart';
-import 'package:listing/src/widgets/DrawerWidget.dart';
-import 'package:listing/src/widgets/FilterWidget.dart';
+import 'package:shareLearnTeach/config/ui_icons.dart';
+import 'package:shareLearnTeach/src/screens/tabs/account.dart';
+import 'package:shareLearnTeach/src/screens/chat.dart';
+import 'package:shareLearnTeach/src/screens/favorites.dart';
+import 'package:shareLearnTeach/src/screens/home.dart';
+import 'package:shareLearnTeach/src/screens/messages.dart';
+import 'package:shareLearnTeach/src/screens/notifications.dart';
+import 'package:shareLearnTeach/src/widgets/DrawerWidget.dart';
+import 'package:shareLearnTeach/src/widgets/FilterWidget.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

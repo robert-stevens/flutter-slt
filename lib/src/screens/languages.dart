@@ -1,8 +1,8 @@
-import 'package:listing/src/models/language.dart';
-import 'package:listing/src/widgets/DrawerWidget.dart';
-import 'package:listing/src/widgets/LanguageItemWidget.dart';
-import 'package:listing/src/widgets/SearchBarWidget.dart';
-import 'package:listing/src/widgets/ShoppingCartButtonWidget.dart';
+import 'package:shareLearnTeach/src/models/language.dart';
+import 'package:shareLearnTeach/src/widgets/DrawerWidget.dart';
+import 'package:shareLearnTeach/src/widgets/LanguageItemWidget.dart';
+import 'package:shareLearnTeach/src/widgets/SearchBarWidget.dart';
+import 'package:shareLearnTeach/src/widgets/ShoppingCartButtonWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 

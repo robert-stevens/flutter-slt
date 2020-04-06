@@ -1,5 +1,5 @@
-import 'package:listing/src/models/utilities.dart';
-import 'package:listing/src/widgets/PopularLocationCarouselItemWidget.dart';
+import 'package:shareLearnTeach/src/models/utilities.dart';
+import 'package:shareLearnTeach/src/widgets/PopularLocationCarouselItemWidget.dart';
 import 'package:flutter/material.dart';
 
 class PopularLocationCarouselWidget extends StatelessWidget {
