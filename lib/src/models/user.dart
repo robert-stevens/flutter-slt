@@ -15,7 +15,7 @@ class User {
   User({this.id, this.displayName, this.email, this.avatar, this.token, this.membershipLevel});
 
   factory User.fromLoginJson(Map<String, dynamic> json) {
-    print('user json: $json');
+    // print('user json: $json');
     return User(
       id: json['user']['id'],
       displayName: json['user']['display_name'],
@@ -64,7 +64,7 @@ class User {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       final User user = User.fromLoginJson(json.decode(response.body));
-      print(user);
+      // print(user);
 
       final SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString('user', json.encode(user.toMap()));
@@ -93,7 +93,7 @@ class User {
 
     // print('getToken');
     // print(user);
-    print(User.fromJson(user));
+    // print(User.fromJson(user));
 
     if(userToken.token != null){
       return userToken.token;
@@ -112,7 +112,7 @@ class User {
   static const String _apiEndpoint = Constants.WORDPRESS_URL+'api/v1/token';
   static final Object _headers = {'Content-Type': 'application/json'};
 
-  int id;
+  String id;
   String displayName;
   String email;
   String gender;
