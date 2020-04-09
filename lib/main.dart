@@ -1,6 +1,9 @@
-import 'package:shareLearnTeach/config/app_config.dart' as config;
 import 'package:flutter/material.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:shareLearnTeach/config/app_config.dart' as config;
 import 'package:shareLearnTeach/route_generator.dart';
 
 // void main() => runApp(MyApp());
@@ -18,6 +21,10 @@ class MyApp extends StatelessWidget {
 
   final SharedPreferences prefs;
   const MyApp({this.prefs});
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   
   // This widget is the root of your application.
   @override
@@ -78,7 +85,7 @@ class MyApp extends StatelessWidget {
     // print('prefs: ${prefs.getString('user')}');
     final dynamic loginedIn = prefs.getString('user') ?? false;
     if (loginedIn != null && loginedIn != false) {
-      print('user IS logged in');
+      // print('user IS logged in');
       return '/';
     } else {
       return '/SignIn';
