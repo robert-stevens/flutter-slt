@@ -23,7 +23,11 @@ class UiIcons {
   UiIcons._();
 
   static const _kFontFam = 'ListingAppUI';
+  static const _customFontFam = 'Typicons';
 
+  // custom icons
+  static const IconData delete = const IconData(0xe058, fontFamily: _customFontFam);
+  // standard icons
   static const IconData home = const IconData(0xe800, fontFamily: _kFontFam);
   static const IconData heart = const IconData(0xe801, fontFamily: _kFontFam);
   static const IconData facebook_circled = const IconData(0xe802, fontFamily: _kFontFam);
