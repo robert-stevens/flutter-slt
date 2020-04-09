@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,7 +17,7 @@ import 'package:shareLearnTeach/src/widgets/EmptyResourcesWidget.dart';
 
 class ResourcesWidget extends StatefulWidget {
 
-  ResourcesWidget({Key key, this.categoryList});
+  const ResourcesWidget({Key key, this.categoryList});
 
   final List<Category> categoryList;
 
@@ -25,11 +27,33 @@ class ResourcesWidget extends StatefulWidget {
 
 class _ResourcesWidgetState extends State<ResourcesWidget> {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQuery = TextEditingController();
+  Timer debounceTimer;
+  User _user;
+  List<Resource> _resourcesList = <Resource>[]; 
+  String layout = 'list';
+  String _profilePicture;
+  String _keyword = '';
+  bool _isLoading = true;
+  int incrementCount = 10;
+
   _ResourcesWidgetState() {
     User().getUser().then((User val) => setState(() {
       _user = val;
       _profilePicture = val.avatar;
     }));
+
+    _searchQuery.addListener(() {
+      if (debounceTimer != null) {
+        debounceTimer.cancel();
+      }
+      debounceTimer = Timer(Duration(milliseconds: 500), () {
+        if (this.mounted && _searchQuery.text.length >= 3 && _searchQuery.text != _keyword){
+          _getDefaultList(_searchQuery.text);
+        }
+      });
+    });
   }
 
   @override
@@ -38,32 +62,17 @@ class _ResourcesWidgetState extends State<ResourcesWidget> {
     _getDefaultList(_keyword); 
   }
 
-  void onSearch(String value) {
-    // print('keyword: $value');
-    if(value.length > 3)
-      setState(() => {
-        _isLoading = true
-      });
-      _getDefaultList(value);
-  }
-
   Future<void> _getDefaultList(String keyword) async {
 
-    // perform fetching data delay
-    // await Future<dynamic>.delayed(const Duration(seconds: 2));
-    // print('category list: ${widget.categoryList}');
-    // print('keyword $keyword');
-    if(_keyword != keyword){
-      setState(() {
-        _resourcesList = <Resource>[];
-        _keyword = keyword;
-      });
-    }
-    final List<Resource> newItems = await Resource.getResources(widget.categoryList, _keyword, _resourcesList.length, incrementCount);
+    this.setState((){
+      _isLoading = true;
+    });
+
+    final List<Resource> newItems = await Resource.getResources(widget.categoryList, keyword, _resourcesList.length, incrementCount);
     // print('resourcesList length: ${_resourcesList.length}');
     // print('newItems length: ${newItems.length}');
 
-    if (_resourcesList == null || _resourcesList.isEmpty){
+    if (_keyword != keyword){
       _resourcesList = newItems;
     } else {
       _resourcesList.addAll( newItems);
@@ -71,21 +80,10 @@ class _ResourcesWidgetState extends State<ResourcesWidget> {
 
     setState(() => {
       _resourcesList = _resourcesList,
-      _isLoading = false
+      _isLoading = false,
+      _keyword = keyword
     });
   }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Resource> _resourcesList = <Resource>[]; 
-  String layout = 'list';
-  bool _isLoading = true;
-
-  User _user;
-  String _profilePicture;
-  String _keyword = '';
-  int incrementCount = 10;
-  // String _openResult = 'Unknown';
-  // SnackBar _snackBar;
 
   Future<void> openAttachment(String guid) async {
       setState(() {
@@ -243,19 +241,20 @@ class _ResourcesWidgetState extends State<ResourcesWidget> {
               margin: const EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
               child: InkWell(
                 borderRadius: BorderRadius.circular(300),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/Account');
-                },
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(_profilePicture),
-                )
-                // onTap: () async {   
-                //   await _user.logout();
-                //   Navigator.of(context).pushNamed('/SignIn');
+                // onTap: () {
+                //   Navigator.of(context).pushNamed('/Account');
                 // },
-                // child: Icon(
-                //   Icons.power_settings_new,
-                //   color: Theme.of(context).focusColor.withOpacity(1),)
+                // child: CircleAvatar(
+                //   backgroundImage: NetworkImage(_profilePicture),
+                // )
+                // logout 
+                onTap: () async {   
+                  await _user.logout();
+                  Navigator.of(context).pushNamed('/SignIn');
+                },
+                child: Icon(
+                  Icons.power_settings_new,
+                  color: Theme.of(context).focusColor.withOpacity(1),)
               )),
         ],
       ),
@@ -266,7 +265,7 @@ class _ResourcesWidgetState extends State<ResourcesWidget> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SearchBarWidget(onSearch: onSearch), 
+            child: SearchBarWidget(controller: _searchQuery), 
           ),
           const SizedBox(height: 20),
           !_isLoading && _resourcesList.isEmpty ? EmptyResourcesWidget() : SizedBox(height: 1),
