@@ -12,7 +12,7 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
 
   _DrawerWidgetState() {
-    User().getUser().then((val) => setState(() {
+    User().getUser().then((User val) => setState(() {
       _user = val;
     }));
   }
@@ -52,7 +52,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Navigator.of(context).pushNamed('/Resources');
             },
             leading: Icon(
-              UiIcons.home,
+              UiIcons.file_1,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
@@ -62,56 +62,82 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
+              Navigator.of(context).pushNamed('/Forums');
             },
             leading: Icon(
-              UiIcons.home,
+              UiIcons.chat,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              'Home',
+              'Ask the PE-ople',
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 0);
-            },
-            leading: Icon(
-              UiIcons.bell,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              'Notifications',
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 4);
-            },
-            leading: Icon(
-              UiIcons.heart,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Wish List",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Categories');
-            },
-            leading: Icon(
-              UiIcons.folder_1,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Categories",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Jobs');
+          //   },
+          //   leading: Icon(
+          //     UiIcons.home,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     'Job Bulletin',
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Tabs', arguments: 2);
+          //   },
+          //   leading: Icon(
+          //     UiIcons.home,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     'Home',
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Tabs', arguments: 0);
+          //   },
+          //   leading: Icon(
+          //     UiIcons.bell,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     'Notifications',
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Tabs', arguments: 4);
+          //   },
+          //   leading: Icon(
+          //     UiIcons.heart,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     "Wish List",
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Categories');
+          //   },
+          //   leading: Icon(
+          //     UiIcons.folder_1,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     "Categories",
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
           ListTile(
             dense: true,
             title: Text(
@@ -123,32 +149,32 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               color: Theme.of(context).focusColor.withOpacity(0.3),
             ),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 1);
-            },
-            leading: Icon(
-              UiIcons.settings_1,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Settings",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Languages');
-            },
-            leading: Icon(
-              UiIcons.planet_earth,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Languages",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+          //   },
+          //   leading: Icon(
+          //     UiIcons.settings_1,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     "Settings",
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Languages');
+          //   },
+          //   leading: Icon(
+          //     UiIcons.planet_earth,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     "Languages",
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
           ListTile(
             onTap: () async {
               await _user.logout();
