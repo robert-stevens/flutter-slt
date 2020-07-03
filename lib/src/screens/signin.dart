@@ -7,6 +7,7 @@ import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:shareLearnTeach/src/models/user.dart';
 import 'package:shareLearnTeach/src/models/category.dart';
 import 'package:shareLearnTeach/src/screens/web_view.dart';
+// import 'package:shareLearnTeach/src/screens/tabs.dart';
 
 class SignInWidget extends StatefulWidget {
   @override
@@ -25,78 +26,82 @@ class _SignInWidgetState extends State<SignInWidget> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _handleLogin(BuildContext content) async {
-
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
 
       setState(() {
-        _isLoading =  true;
+        _isLoading = true;
       });
 
       //for testing
       // _email = 'RobertStevens';
       // _password = 'Rob5@W3bpr355';
-      // _email = 'flinders';
-      // _password = '5t3V3n@5t';
+      _email = 'flinders';
+      _password = '5t3V3n@5t';
 
       final dynamic response = await user.loginUser(_email, _password);
-      if(response.statusCode == 200){
-
+      if (response.statusCode == 200) {
         await Category.getAndSaveCategories();
         setState(() {
           _isLoading = false;
         });
-        Navigator.of(context).pushNamed('/Resources');
+        Navigator.of(context).pushNamed('/Tabs', arguments: 0);
       } else {
-        // print('error: ${response.body}');
-        // print('error_description: ${response.body['error_description']}');
-        // print('error_description: ${response.body.error_description}');
-
         final dynamic error = json.decode(response.body as String);
 
         setState(() {
           _isLoading = false;
           _error = error['error_description'] as String;
         });
-        // inform user of login error.
-        // _snackBar = SnackBar(content: Text(error['error_description']));
-
-        // // Find the Scaffold in the widget tree and use it to show a SnackBar.
-        // Scaffold.of(context).showSnackBar(_snackBar);
       }
     } else {
       // handle form errors
     }
-
   }
 
-  void _openMembershipPage(){
-    Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (BuildContext context) {
-      return const WebViewWebPage(title: 'Upgrade Now', url: 'https://sharelearnteach.com/membership-account/membership-levels/');
-    }));
-  }
+  // void _openMembershipPage() {
+  //   Navigator.of(context)
+  //       .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+  //     return const WebViewWebPage(
+  //         title: 'Upgrade Now',
+  //         url:
+  //             'https://sharelearnteach.com/membership-account/membership-levels/');
+  //   }));
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).accentColor,
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Theme.of(context).accentColor,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(UiIcons.return_icon, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 85),
+            const SizedBox(height: 25),
             Stack(
               children: <Widget>[
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).primaryColor,
                       boxShadow: [
                         BoxShadow(
-                            color: Theme.of(context).hintColor.withOpacity(0.2), offset: const Offset(0, 10), blurRadius: 20)
+                            color: Theme.of(context).hintColor.withOpacity(0.2),
+                            offset: const Offset(0, 10),
+                            blurRadius: 20)
                       ]),
                   child: Form(
                     key: _formKey,
@@ -104,27 +109,35 @@ class _SignInWidgetState extends State<SignInWidget> {
                       children: <Widget>[
                         Image.asset('img/logo.png'),
                         const SizedBox(height: 25),
-                        Text('Sign In', style: Theme.of(context).textTheme.display2),
+                        Text('Sign In',
+                            style: Theme.of(context).textTheme.display2),
                         const SizedBox(height: 20),
                         TextField(
                           style: TextStyle(color: Theme.of(context).focusColor),
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (String value) {
-                            // print(value);
                             _email = value;
                           },
                           decoration: InputDecoration(
                             hintText: 'Username / Email Address',
                             hintStyle: Theme.of(context).textTheme.body1.merge(
-                                  TextStyle(color: Theme.of(context).focusColor.withOpacity(0.6)),
+                                  TextStyle(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.6)),
                                 ),
                             enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                            focusedBorder:
-                                UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor)),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .focusColor
+                                        .withOpacity(0.2))),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).focusColor)),
                             prefixIcon: Icon(
                               UiIcons.envelope,
-                              color: Theme.of(context).focusColor.withOpacity(0.6),
+                              color:
+                                  Theme.of(context).focusColor.withOpacity(0.6),
                             ),
                           ),
                         ),
@@ -139,15 +152,23 @@ class _SignInWidgetState extends State<SignInWidget> {
                           decoration: InputDecoration(
                             hintText: 'Password',
                             hintStyle: Theme.of(context).textTheme.body1.merge(
-                                  TextStyle(color: Theme.of(context).focusColor.withOpacity(0.6)),
+                                  TextStyle(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.6)),
                                 ),
                             enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                            focusedBorder:
-                                UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor)),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .focusColor
+                                        .withOpacity(0.2))),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).focusColor)),
                             prefixIcon: Icon(
                               UiIcons.padlock_1,
-                              color: Theme.of(context).focusColor.withOpacity(0.6),
+                              color:
+                                  Theme.of(context).focusColor.withOpacity(0.6),
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -155,8 +176,11 @@ class _SignInWidgetState extends State<SignInWidget> {
                                   _showPassword = !_showPassword;
                                 });
                               },
-                              color: Theme.of(context).focusColor.withOpacity(0.4),
-                              icon: Icon(_showPassword ? Icons.visibility_off : Icons.visibility),
+                              color:
+                                  Theme.of(context).focusColor.withOpacity(0.4),
+                              icon: Icon(_showPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
                             ),
                           ),
                         ),
@@ -175,24 +199,35 @@ class _SignInWidgetState extends State<SignInWidget> {
                         //     style: Theme.of(context).textTheme.body1,
                         //   ),
                         // ),
-                        _error != null && _error.isNotEmpty ? Text(_error, style: TextStyle(color: Colors.red),) : Text(''),
+                        _error != null && _error.isNotEmpty
+                            ? Text(
+                                _error,
+                                style: TextStyle(color: Colors.red),
+                              )
+                            : Text(''),
                         const SizedBox(height: 30),
-                        _isLoading ? 
-                          const Center(child: CircularProgressIndicator())
-                        : FlatButton(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 70),
-                          onPressed: () {
-                            _handleLogin(context);
-                          },
-                          child: Text(
-                            'Login',
-                            style: Theme.of(context).textTheme.title.merge(
-                                  TextStyle(color: Theme.of(context).primaryColor),
+                        _isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : FlatButton(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 70),
+                                onPressed: () {
+                                  _handleLogin(context);
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .title
+                                      .merge(
+                                        TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
                                 ),
-                          ),
-                          color: Theme.of(context).accentColor,
-                          shape: const StadiumBorder(),
-                        ),
+                                color: Theme.of(context).accentColor,
+                                shape: const StadiumBorder(),
+                              ),
                         const SizedBox(height: 20),
                         // Text(
                         //   'Or using social media',
@@ -208,7 +243,7 @@ class _SignInWidgetState extends State<SignInWidget> {
             ),
             FlatButton(
               onPressed: () {
-                _openMembershipPage();
+                Navigator.of(context).pushNamed('/SignUp');
               },
               child: RichText(
                 text: TextSpan(
@@ -217,7 +252,9 @@ class _SignInWidgetState extends State<SignInWidget> {
                       ),
                   children: [
                     const TextSpan(text: 'Don\'t have an account ?'),
-                    TextSpan(text: ' Sign Up', style: TextStyle(fontWeight: FontWeight.w700)),
+                    TextSpan(
+                        text: ' Sign Up',
+                        style: TextStyle(fontWeight: FontWeight.w700)),
                   ],
                 ),
               ),

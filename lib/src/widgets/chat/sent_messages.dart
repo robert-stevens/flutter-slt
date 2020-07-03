@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shareLearnTeach/src/models/reply.dart';
 
 class SentMessageWidget extends StatelessWidget {
-  final Reply message;
+  final dynamic message;
   const SentMessageWidget({
     Key key,
     @required this.message,

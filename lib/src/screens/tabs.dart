@@ -1,10 +1,14 @@
 import 'package:shareLearnTeach/config/ui_icons.dart';
-import 'package:shareLearnTeach/src/screens/tabs/account.dart';
-import 'package:shareLearnTeach/src/screens/chat.dart';
-import 'package:shareLearnTeach/src/screens/favorites.dart';
-import 'package:shareLearnTeach/src/screens/home.dart';
-import 'package:shareLearnTeach/src/screens/messages.dart';
-import 'package:shareLearnTeach/src/screens/notifications.dart';
+import 'package:shareLearnTeach/src/models/category.dart';
+import 'package:shareLearnTeach/src/models/user.dart';
+// import 'package:shareLearnTeach/src/screens/home.dart';
+// import 'package:shareLearnTeach/src/screens/chat.dart';
+// import 'package:shareLearnTeach/src/screens/favorites.dart';
+import 'package:shareLearnTeach/src/screens/tabs/activity.dart';
+import 'package:shareLearnTeach/src/screens/tabs/resources.dart';
+import 'package:shareLearnTeach/src/screens/tabs/ask.dart';
+// import 'package:shareLearnTeach/src/screens/messages.dart';
+// import 'package:shareLearnTeach/src/screens/notifications.dart';
 import 'package:shareLearnTeach/src/widgets/DrawerWidget.dart';
 import 'package:shareLearnTeach/src/widgets/FilterWidget.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +16,17 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class TabsWidget extends StatefulWidget {
   int currentTab = 2;
+  final List<Category> categoryList;
   int selectedTab = 2;
-  String currentTitle = 'Home';
-  Widget currentPage = HomeWidget();
+  String currentTitle = 'Activity';
+  String _profilePicture;
+  User _user;
+  Widget currentPage = ActivityWidget();
 
   TabsWidget({
     Key key,
     this.currentTab,
+    this.categoryList,
   }) : super(key: key);
 
   @override
@@ -33,6 +41,11 @@ class _TabsWidgetState extends State<TabsWidget> {
   initState() {
     _selectTab(widget.currentTab);
     super.initState();
+
+    User().getUser().then((User val) => setState(() {
+          widget._user = val;
+          widget._profilePicture = val.avatar;
+        }));
   }
 
   @override
@@ -47,29 +60,21 @@ class _TabsWidgetState extends State<TabsWidget> {
       widget.selectedTab = tabItem;
       switch (tabItem) {
         case 0:
-          widget.currentTitle = 'Notifications';
-          widget.currentPage = NotificationsWidget();
+          widget.currentTitle = 'Activity';
+          widget.currentPage = ActivityWidget(user: widget._user);
           break;
         case 1:
-          widget.currentTitle = 'Account';
-          widget.currentPage = AccountWidget();
+          widget.currentTitle = 'Resources';
+          widget.currentPage = ResourcesWidget(
+            user: widget._user,
+            categoryList: widget.categoryList,
+          );
           break;
         case 2:
-          widget.currentTitle = 'Home';
-          widget.currentPage = HomeWidget();
-          break;
-        case 3:
-          widget.currentTitle = 'Messages';
-          widget.currentPage = MessagesWidget();
-          break;
-        case 4:
-          widget.currentTitle = 'Favorites';
-          widget.currentPage = FavoritesWidget();
-          break;
-        case 5:
-          widget.selectedTab = 3;
-          widget.currentTitle = 'Chat';
-          widget.currentPage = ChatWidget();
+          widget.currentTitle = 'Ask the PE-ople';
+          widget.currentPage = ForumsScreen(
+            user: widget._user,
+          );
           break;
       }
     });
@@ -83,7 +88,7 @@ class _TabsWidgetState extends State<TabsWidget> {
       endDrawer: FilterWidget(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: new IconButton(
+        leading: IconButton(
           icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
           onPressed: () => _scaffoldKey.currentState.openDrawer(),
         ),
@@ -95,18 +100,20 @@ class _TabsWidgetState extends State<TabsWidget> {
         ),
         actions: <Widget>[
           Container(
-              width: 30,
-              height: 30,
-              margin: EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(300),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/Tabs', arguments: 1);
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('img/user2.jpg'),
-                ),
-              )),
+            width: 30,
+            height: 30,
+            margin: const EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
+            child: widget._user != null
+                ? InkWell(
+                    borderRadius: BorderRadius.circular(300),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/Account');
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(widget._profilePicture),
+                    ))
+                : null,
+          )
         ],
       ),
       body: widget.currentPage,
@@ -127,39 +134,91 @@ class _TabsWidgetState extends State<TabsWidget> {
         // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: Icon(UiIcons.bell),
             title: new Container(height: 0.0),
+            icon: widget.currentTab == 0
+                ? Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor.withOpacity(0.8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.4),
+                            blurRadius: 40,
+                            offset: Offset(0, 15)),
+                        BoxShadow(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.4),
+                            blurRadius: 13,
+                            offset: Offset(0, 3))
+                      ],
+                    ),
+                    child: new Icon(UiIcons.home,
+                        color: Theme.of(context).primaryColor),
+                  )
+                : Icon(UiIcons.home),
           ),
           BottomNavigationBarItem(
-            icon: Icon(UiIcons.user_1),
             title: new Container(height: 0.0),
+            icon: widget.currentTab == 1
+                ? Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor.withOpacity(0.8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.4),
+                            blurRadius: 40,
+                            offset: Offset(0, 15)),
+                        BoxShadow(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.4),
+                            blurRadius: 13,
+                            offset: Offset(0, 3))
+                      ],
+                    ),
+                    child: new Icon(UiIcons.file_1,
+                        color: Theme.of(context).primaryColor),
+                  )
+                : Icon(UiIcons.file_1),
           ),
           BottomNavigationBarItem(
-              title: new Container(height: 5.0),
-              icon: Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor.withOpacity(0.8),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4), blurRadius: 40, offset: Offset(0, 15)),
-                    BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4), blurRadius: 13, offset: Offset(0, 3))
-                  ],
-                ),
-                child: new Icon(UiIcons.home, color: Theme.of(context).primaryColor),
-              )),
-          BottomNavigationBarItem(
-            icon: new Icon(UiIcons.chat),
-            title: new Container(height: 0.0),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(UiIcons.heart),
-            title: new Container(height: 0.0),
+            title: new Container(height: 5.0),
+            icon: widget.currentTab == 2
+                ? Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor.withOpacity(0.8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.4),
+                            blurRadius: 40,
+                            offset: Offset(0, 15)),
+                        BoxShadow(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.4),
+                            blurRadius: 13,
+                            offset: Offset(0, 3))
+                      ],
+                    ),
+                    child: new Icon(UiIcons.chat,
+                        color: Theme.of(context).primaryColor),
+                  )
+                : Icon(UiIcons.chat),
           ),
         ],
       ),

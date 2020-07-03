@@ -4,8 +4,8 @@ import 'package:shareLearnTeach/src/models/route_argument.dart';
 import 'package:shareLearnTeach/src/screens/Categorie.dart';
 import 'package:shareLearnTeach/src/screens/account.dart';
 import 'package:shareLearnTeach/src/screens/Categories.dart';
-import 'package:shareLearnTeach/src/screens/Resources.dart';
-import 'package:shareLearnTeach/src/screens/forums/index.dart';
+// import 'package:shareLearnTeach/src/screens/tabs/Resources.dart';
+// import 'package:shareLearnTeach/src/screens/forums/index.dart';
 // import 'package:shareLearnTeach/src/screens/forums/topic.dart';
 // import 'package:shareLearnTeach/src/screens/forums/job_bulletin.dart';
 // import 'package:shareLearnTeach/src/screens/favorites.dart';
@@ -24,34 +24,43 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        // return MaterialPageRoute(builder: (_) => Splash());
-        return MaterialPageRoute<dynamic>(builder: (_) => ResourcesWidget());
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => TabsWidget(currentTab: 0, categoryList: null));
       case '/SignIn':
-        return MaterialPageRoute<dynamic>(builder: (_) => SignInWidget()); 
+        return MaterialPageRoute<dynamic>(builder: (_) => SignInWidget());
       case '/SignUp':
-        return MaterialPageRoute<dynamic>(builder: (_) => SignUpWidget());  
+        return MaterialPageRoute<dynamic>(builder: (_) => SignUpWidget());
       case '/Account':
-        return MaterialPageRoute<dynamic>(builder: (_) => AccountWidget()); 
+        return MaterialPageRoute<dynamic>(builder: (_) => AccountWidget());
       case '/Tabs':
-        return MaterialPageRoute<dynamic>(builder: (_) => TabsWidget(currentTab: args as int,));    
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => TabsWidget(
+                  currentTab: args as int,
+                ));
       case '/Utilities':
-        return MaterialPageRoute<dynamic>(builder: (_) => UtilitieWidget(routeArgument: args as RouteArgument,));
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => UtilitieWidget(
+                  routeArgument: args as RouteArgument,
+                ));
       case '/Languages':
         return MaterialPageRoute<dynamic>(builder: (_) => LanguagesWidget());
       case '/Categories':
         return MaterialPageRoute<dynamic>(builder: (_) => CategoriesWidget());
       // case '/Favourites':
       //   return MaterialPageRoute(builder: (_) => FavoritesWidget());
-      case '/Resources':
-        return MaterialPageRoute<dynamic>(builder: (_) => ResourcesWidget());
-      case '/Forums':
-        return MaterialPageRoute<dynamic>(builder: (_) => ForumsScreen());
+      // case '/Resources':
+      //   return MaterialPageRoute<dynamic>(builder: (_) => ResourcesWidget());
+      // case '/Forums':
+      //   return MaterialPageRoute<dynamic>(builder: (_) => ForumsScreen());
       // case '/Topic':
       //   return MaterialPageRoute<dynamic>(builder: (_) => TopicScreen());
       // case '/Jobs':
       //   return MaterialPageRoute<dynamic>(builder: (_) => const JobBulletinScreen());
       case '/Categorie':
-        return MaterialPageRoute<dynamic>(builder: (_) => CategorieWidget(routeArgument: args as  RouteArgument,));
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => CategorieWidget(
+                  routeArgument: args as RouteArgument,
+                ));
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

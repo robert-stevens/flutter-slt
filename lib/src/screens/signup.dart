@@ -1,7 +1,11 @@
 import 'package:shareLearnTeach/config/ui_icons.dart';
-import 'package:shareLearnTeach/src/widgets/SocialMediaWidget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:shareLearnTeach/src/models/membership_options.dart';
+import 'package:shareLearnTeach/src/screens/checkout.dart';
+// import 'package:shareLearnTeach/src/widgets/MembershipItem.dart';
 
 class SignUpWidget extends StatefulWidget {
   @override
@@ -9,152 +13,190 @@ class SignUpWidget extends StatefulWidget {
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {
-  bool _showPassword = false;
+  int _current = 0;
+  MembershipOptionList _membershipOptionList;
+  @override
+  void initState() {
+    _membershipOptionList = new MembershipOptionList();
+    super.initState();
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(UiIcons.return_icon, color: Theme.of(context).accentColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Image.asset('img/membership.png'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  margin: EdgeInsets.symmetric(vertical: 65, horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Theme.of(context).primaryColor,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Theme.of(context).hintColor.withOpacity(0.2), offset: Offset(0, 10), blurRadius: 20)
-                    ],
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 25),
-                      Text('Sign Up', style: Theme.of(context).textTheme.display2),
-                      SizedBox(height: 20),
-                      new TextField(
-                        style: TextStyle(color: Theme.of(context).focusColor),
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: new InputDecoration(
-                          hintText: 'Email Address',
-                          hintStyle: Theme.of(context).textTheme.body1.merge(
-                                TextStyle(color: Theme.of(context).focusColor.withOpacity(0.4)),
-                              ),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                          focusedBorder:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor)),
-                          prefixIcon: Icon(
-                            UiIcons.envelope,
-                            color: Theme.of(context).focusColor.withOpacity(0.4),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      new TextField(
-                        style: TextStyle(color: Theme.of(context).focusColor),
-                        keyboardType: TextInputType.text,
-                        obscureText: !_showPassword,
-                        decoration: new InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: Theme.of(context).textTheme.body1.merge(
-                                TextStyle(color: Theme.of(context).focusColor.withOpacity(0.4)),
-                              ),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                          focusedBorder:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor)),
-                          prefixIcon: Icon(
-                            UiIcons.padlock_1,
-                            color: Theme.of(context).focusColor.withOpacity(0.4),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _showPassword = !_showPassword;
-                              });
-                            },
-                            color: Theme.of(context).focusColor.withOpacity(0.4),
-                            icon: Icon(_showPassword ? Icons.visibility_off : Icons.visibility),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      new TextField(
-                        style: TextStyle(color: Theme.of(context).focusColor),
-                        keyboardType: TextInputType.text,
-                        obscureText: !_showPassword,
-                        decoration: new InputDecoration(
-                          hintText: 'Confirm Password',
-                          hintStyle: Theme.of(context).textTheme.body1.merge(
-                                TextStyle(color: Theme.of(context).focusColor.withOpacity(0.4)),
-                              ),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                          focusedBorder:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor)),
-                          prefixIcon: Icon(
-                            UiIcons.padlock_1,
-                            color: Theme.of(context).focusColor.withOpacity(0.4),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _showPassword = !_showPassword;
-                              });
-                            },
-                            color: Theme.of(context).focusColor.withOpacity(0.4),
-                            icon: Icon(_showPassword ? Icons.visibility_off : Icons.visibility),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 40),
-                      FlatButton(
-                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 70),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/SignIn');
-                        },
-                        child: Text(
-                          'Sign Up',
-                          style: Theme.of(context).textTheme.title.merge(
-                                TextStyle(color: Theme.of(context).primaryColor),
-                              ),
-                        ),
-                        color: Theme.of(context).accentColor,
-                        shape: StadiumBorder(),
-                      ),
-                      SizedBox(height: 50),
-                      Text(
-                        'Or using social media',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
-                      SizedBox(height: 20),
-                      new SocialMediaWidget()
-                    ],
-                  ),
-                ),
-              ],
+            const SizedBox(height: 50),
+            Text(
+              'Membership Options',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+              ),
+              textAlign: TextAlign.center,
             ),
-            FlatButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/SignIn');
-              },
-              child: RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.title.merge(
-                        TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                  children: [
-                    TextSpan(text: 'Already have an account ?'),
-                    TextSpan(text: ' Sign In', style: TextStyle(fontWeight: FontWeight.w700)),
-                  ],
-                ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20),
+              child: CarouselSlider(
+                height: 550.0,
+                viewportFraction: 1.0,
+                onPageChanged: (index) {
+                  setState(() {
+                    _current = index;
+                  });
+                },
+                items: _membershipOptionList.list
+                    .map((MembershipOption membershipOption) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                          width: MediaQuery.of(context).size.width - 50,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            elevation: 4.0,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 8.0),
+                            color: Colors.white,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      membershipOption.title,
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 24,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      membershipOption.subTitle,
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 18,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          membershipOption.benefits.length,
+                                      itemExtent: 30,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          dense: true,
+                                          leading: Icon(Icons.check),
+                                          title: Text(
+                                            membershipOption.benefits
+                                                .elementAt(index),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subhead,
+                                          ),
+                                        );
+                                      }),
+                                  // Spacer(
+                                  //   flex: 8,
+                                  // ),
+                                  Spacer(),
+                                  Text('Pay by Credit Card / Debit Card '),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: FlatButton(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 70),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute<void>(builder:
+                                                (BuildContext context) {
+                                          return CheckoutScreen(
+                                              membershipOption:
+                                                  membershipOption);
+                                        }));
+                                      },
+                                      child: Text(
+                                        'Choose Option',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .title
+                                            .merge(
+                                              TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                            ),
+                                      ),
+                                      color: Theme.of(context).accentColor,
+                                      shape: const StadiumBorder(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ));
+                    },
+                  );
+                }).toList(),
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Row(
+                      children: _membershipOptionList.list
+                          .map((MembershipOption membershipOption) {
+                        return Container(
+                          width: 10.0,
+                          height: 10.0,
+                          margin: const EdgeInsets.symmetric(horizontal: 2),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
+                              ),
+                              color: _current ==
+                                      _membershipOptionList.list
+                                          .indexOf(membershipOption)
+                                  ? Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.8)
+                                  : Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.2)),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

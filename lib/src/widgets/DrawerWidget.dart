@@ -1,8 +1,7 @@
 import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:shareLearnTeach/src/models/user.dart';
+import 'package:shareLearnTeach/src/screens/signin.dart';
 import 'package:flutter/material.dart';
-
-
 
 class DrawerWidget extends StatefulWidget {
   @override
@@ -10,11 +9,10 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
-
   _DrawerWidgetState() {
     User().getUser().then((User val) => setState(() {
-      _user = val;
-    }));
+          _user = val;
+        }));
   }
 
   User _user;
@@ -24,32 +22,54 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          GestureDetector(
+          _user != null
+              ? GestureDetector(
+                  onTap: () {
+                    // Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+                    Navigator.of(context).pop(context);
+                  },
+                  child: UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).hintColor.withOpacity(0.1),
+                    ),
+                    accountName: Text(
+                      _user.displayName,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    accountEmail: Text(
+                      _user.email,
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Theme.of(context).accentColor,
+                      backgroundImage: NetworkImage(_user.avatar),
+                    ),
+                  ),
+                )
+              : FractionallySizedBox(
+                  alignment: Alignment.center,
+                  widthFactor: 0.7,
+                  child: Container(
+                      child: Image.asset(
+                        'img/logo.png',
+                      ),
+                      padding: EdgeInsets.only(bottom: 10))),
+          ListTile(
             onTap: () {
-              // Navigator.of(context).pushNamed('/Tabs', arguments: 1);
-              Navigator.of(context).pop(context);
+              Navigator.of(context).pushNamed('/Tabs', arguments: 0);
             },
-            child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).hintColor.withOpacity(0.1),
-              ),
-              accountName: Text(
-                _user.displayName,
-                style: Theme.of(context).textTheme.title,
-              ),
-              accountEmail: Text(
-                _user.email,
-                style: Theme.of(context).textTheme.caption,
-              ),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Theme.of(context).accentColor,
-                backgroundImage: NetworkImage(_user.avatar),
-              ),
+            leading: Icon(
+              UiIcons.home,
+              color: Theme.of(context).focusColor.withOpacity(1),
+            ),
+            title: Text(
+              'Activity Feed',
+              style: Theme.of(context).textTheme.subhead,
             ),
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Resources');
+              Navigator.of(context).pushNamed('/Tabs', arguments: 1);
             },
             leading: Icon(
               UiIcons.file_1,
@@ -62,7 +82,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Forums');
+              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
             },
             leading: Icon(
               UiIcons.chat,
@@ -175,20 +195,38 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           //     style: Theme.of(context).textTheme.subhead,
           //   ),
           // ),
-          ListTile(
-            onTap: () async {
-              await _user.logout();
-              Navigator.of(context).pushNamed('/SignIn');
-            },
-            leading: Icon(
-              UiIcons.upload,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              'Log out',
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
+          _user != null
+              ? ListTile(
+                  onTap: () async {
+                    await _user.logout();
+                    Navigator.of(context)
+                        .popAndPushNamed('/Tabs', arguments: 0);
+                  },
+                  leading: Icon(
+                    UiIcons.upload,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'Sign out',
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                )
+              : ListTile(
+                  onTap: () async {
+                    // Navigator.of(context).pushNamed('/SignIn');
+                    // Navigator.pushNamed(context, '/SignIn');
+
+                    Navigator.of(context).push(_createRoute());
+                  },
+                  leading: Icon(
+                    UiIcons.upload,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'Sign in',
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                )
           /*ListTile(
             dense: true,
             title: Text(
@@ -204,4 +242,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       ),
     );
   }
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => SignInWidget(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(0.0, 1.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
