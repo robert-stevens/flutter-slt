@@ -25,7 +25,7 @@ class _CategoryIconWidgetState extends State<CategoryIconWidget> with SingleTick
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       onPressed: () {
         setState(() {
-          widget.onPressed(widget.category.id);
+          // widget.onPressed(widget.category.id);
         });
       },
         child: Column(

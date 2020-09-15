@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shareLearnTeach/src/models/category.dart';
-import 'package:shareLearnTeach/src/screens/resources.dart';
+import 'package:shareLearnTeach/src/screens/tabs/resources.dart';
+import 'package:shareLearnTeach/src/screens/tabs.dart';
 // import 'package:shareLearnTeach/src/models/route_argument.dart';
 // import 'package:shareLearnTeach/src/services/wordpress.dart';
 
@@ -10,7 +11,7 @@ import 'package:shareLearnTeach/src/screens/resources.dart';
 class ScreenArguments {
   ScreenArguments(this.list);
 
-  final List<Category>  list;
+  final List<Category> list;
 }
 
 class FilterWidget extends StatefulWidget {
@@ -19,23 +20,19 @@ class FilterWidget extends StatefulWidget {
 }
 
 class _FilterWidgetState extends State<FilterWidget> {
-
   @override
   void initState() {
     super.initState();
-    _getCategories(); 
+    _getCategories();
   }
 
-  List<Category> _categoryList = <Category>[]; 
-  
+  List<Category> _categoryList = <Category>[];
 
   void _getCategories() async {
     final List<Category> categoriesList = await Category.getCategoryList();
 
     categoriesList.removeWhere((Category item) => item.name == 'Uncategorized');
-    setState(() => {
-      _categoryList = categoriesList
-    });
+    setState(() => {_categoryList = categoriesList});
   }
 
   void selectById(String id) {
@@ -64,7 +61,7 @@ class _FilterWidgetState extends State<FilterWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text('Refine Results'),
+                  const Text('Categories'),
                   MaterialButton(
                     onPressed: () {
                       setState(() {
@@ -80,44 +77,42 @@ class _FilterWidgetState extends State<FilterWidget> {
               ),
             ),
             Expanded(
-              child: ListView(
+              child: ListView.separated(
                 primary: true,
                 shrinkWrap: true,
-                children: <Widget>[
-                  ExpansionTile(
-                    initiallyExpanded: true,
-                    title: const Text(
-                        'Categories',
-                    ),
-                    children: List<CheckboxListTile>.generate(_categoryList.length, (int index) {
-                      final Category _category = _categoryList.elementAt(index);
-                      return CheckboxListTile(
-                        value: _category.selected,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _category.selected = value;
-                          });
-                        },
-                        secondary: Container(
+                separatorBuilder: (BuildContext context, int index) {
+                  return const Divider(
+                    height: 10,
+                  );
+                },
+                itemCount: _categoryList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  // print('ActivityItemWidget index: $index');
+                  var _category = _categoryList.elementAt(index);
+                  return CheckboxListTile(
+                      value: _category.selected,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _category.selected = value;
+                        });
+                      },
+                      secondary: Container(
                           width: 55,
                           height: 35,
                           // child: Icon(
                           //   _category.icon,
                           //   color: Colors.black,
                           // ),
-                          child: Chip(label: Text('${_category.count}'),)
-                        ),
-                        title: Text(
-                          '${_category.name}',
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          maxLines: 1,
-                        ),
-                      );
-                    }),
-                  ),
-                  
-                ],
+                          child: Chip(
+                            label: Text('${_category.count}'),
+                          )),
+                      title: Text(
+                        '${_category.name}',
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        maxLines: 1,
+                      ));
+                },
               ),
             ),
             const SizedBox(height: 15),
@@ -126,16 +121,20 @@ class _FilterWidgetState extends State<FilterWidget> {
                 // Navigator.of(context).popAndPushNamed('/Resources');
                 // Navigator.of(context).popAndPushNamed('/Resources', arguments: {'categoriesList': _categoryList}, );
                 // Navigator.of(context).pop(context);
-                
+
                 // Navigator.of(context).popAndPushNamed('/Resources',
                 //   arguments: ScreenArguments(_categoryList));
+
+                // Navigator.of(context)
+                //     .pushNamed('/Tabs', arguments: {_categoryList: _categoryList, currentTab: 2});
 
                 Navigator.push<dynamic>(
                   context,
                   MaterialPageRoute<dynamic>(
-                    builder: (BuildContext context) => ResourcesWidget(
-                      categoryList: _categoryList,
-                    )),
+                      builder: (BuildContext context) => TabsWidget(
+                            currentTab: 1,
+                            categoryList: _categoryList,
+                          )),
                 );
               },
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),

@@ -1,5 +1,6 @@
 import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:shareLearnTeach/src/models/user.dart';
+import 'package:shareLearnTeach/src/screens/web_view.dart';
 import 'package:shareLearnTeach/src/widgets/ProfileSettingsDialog.dart';
 import 'package:shareLearnTeach/src/widgets/DrawerWidget.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,23 @@ class AccountWidget extends StatefulWidget {
 
 class _AccountWidgetState extends State<AccountWidget> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final User _user = User.init().getCurrentUser();
+
+  User _user = User.init();
+
+  _AccountWidgetState() {
+    User().getUser().then((User val) => setState(() {
+      print(val);
+      _user = val;
+      // _profilePicture = val.avatar;
+    }));
+  }
+
+  void _openMembershipPage(){
+    Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (BuildContext context) {
+      return const WebViewWebPage(title: 'Help & Support', url: 'https://sharelearnteach.com/support/');
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,80 +118,80 @@ class _AccountWidgetState extends State<AccountWidget> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(300),
                         onTap: () {
-                          Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+                          // Navigator.of(context).pushNamed('/Tabs', arguments: 1);
                         },
                         child: CircleAvatar(
-                          backgroundImage: AssetImage(_user.avatar),
-                        ),
+                          backgroundImage: NetworkImage(_user.avatar),
+                        )
                       )),
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: [
-                  BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
-                ],
-              ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/Tabs', arguments: 4);
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          Icon(UiIcons.heart),
-                          Text(
-                            'Wish List',
-                            style: Theme.of(context).textTheme.body1,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/Tabs', arguments: 0);
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          Icon(UiIcons.favorites),
-                          Text(
-                            'Following',
-                            style: Theme.of(context).textTheme.body1,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/Tabs', arguments: 3);
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          Icon(UiIcons.chat_1),
-                          Text(
-                            'Messages',
-                            style: Theme.of(context).textTheme.body1,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   margin: const EdgeInsets.symmetric(horizontal: 20),
+            //   decoration: BoxDecoration(
+            //     color: Theme.of(context).primaryColor,
+            //     borderRadius: BorderRadius.circular(6),
+            //     boxShadow: [
+            //       BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
+            //     ],
+            //   ),
+            //   child: Row(
+            //     children: <Widget>[
+            //       Expanded(
+            //         child: FlatButton(
+            //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            //           onPressed: () {
+            //             Navigator.of(context).pushNamed('/Tabs', arguments: 4);
+            //           },
+            //           child: Column(
+            //             children: <Widget>[
+            //               Icon(UiIcons.heart),
+            //               Text(
+            //                 'Wish List',
+            //                 style: Theme.of(context).textTheme.body1,
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //       Expanded(
+            //         child: FlatButton(
+            //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            //           onPressed: () {
+            //             Navigator.of(context).pushNamed('/Tabs', arguments: 0);
+            //           },
+            //           child: Column(
+            //             children: <Widget>[
+            //               Icon(UiIcons.favorites),
+            //               Text(
+            //                 'Following',
+            //                 style: Theme.of(context).textTheme.body1,
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //       Expanded(
+            //         child: FlatButton(
+            //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            //           onPressed: () {
+            //             Navigator.of(context).pushNamed('/Tabs', arguments: 3);
+            //           },
+            //           child: Column(
+            //             children: <Widget>[
+            //               Icon(UiIcons.chat_1),
+            //               Text(
+            //                 'Messages',
+            //                 style: Theme.of(context).textTheme.body1,
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               decoration: BoxDecoration(
@@ -194,17 +211,17 @@ class _AccountWidgetState extends State<AccountWidget> {
                       'Profile Settings',
                       style: Theme.of(context).textTheme.body2,
                     ),
-                    trailing: ButtonTheme(
-                      padding: EdgeInsets.all(0),
-                      minWidth: 50.0,
-                      height: 25.0,
-                      child: ProfileSettingsDialog(
-                        user: this._user,
-                        onChanged: () {
-                          setState(() {});
-                        },
-                      ),
-                    ),
+                    // trailing: ButtonTheme(
+                    //   padding: EdgeInsets.all(0),
+                    //   minWidth: 50.0,
+                    //   height: 25.0,
+                    //   child: ProfileSettingsDialog(
+                    //     user: this._user,
+                    //     onChanged: () {
+                    //       setState(() {});
+                    //     },
+                    //   ),
+                    // ),
                   ),
                   ListTile(
                     onTap: () {},
@@ -230,30 +247,32 @@ class _AccountWidgetState extends State<AccountWidget> {
                       style: TextStyle(color: Theme.of(context).focusColor),
                     ),
                   ),
-                  ListTile(
-                    onTap: () {},
-                    dense: true,
-                    title: Text(
-                      'Gender',
-                      style: Theme.of(context).textTheme.body1,
-                    ),
-                    trailing: Text(
-                      _user.gender,
-                      style: TextStyle(color: Theme.of(context).focusColor),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    dense: true,
-                    title: Text(
-                      'Birth Date',
-                      style: Theme.of(context).textTheme.body1,
-                    ),
-                    trailing: Text(
-                      _user.getDateOfBirth(),
-                      style: TextStyle(color: Theme.of(context).focusColor),
-                    ),
-                  ),
+                  // ListTile(
+                  //   onTap: () {},
+                  //   dense: true,
+                  //   title: Text(
+                  //     'Gender',
+                  //     style: Theme.of(context).textTheme.body1,
+                  //   ),
+                  //   trailing: Text(
+                  //     // _user.gender,
+                  //     '',
+                  //     style: TextStyle(color: Theme.of(context).focusColor),
+                  //   ),
+                  // ),
+                  // ListTile(
+                  //   onTap: () {},
+                  //   dense: true,
+                  //   title: Text(
+                  //     'Birth Date',
+                  //     style: Theme.of(context).textTheme.body1,
+                  //   ),
+                  //   trailing: Text(
+                  //     // _user.getDateOfBirth(),
+                  //     '',
+                  //     style: TextStyle(color: Theme.of(context).focusColor),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -277,27 +296,27 @@ class _AccountWidgetState extends State<AccountWidget> {
                       style: Theme.of(context).textTheme.body2,
                     ),
                   ),
-                  ListTile(
-                    onTap: () {},
-                    dense: true,
-                    title: Row(
-                      children: <Widget>[
-                        Icon(
-                          UiIcons.placeholder,
-                          size: 22,
-                          color: Theme.of(context).focusColor,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Shipping Adresses',
-                          style: Theme.of(context).textTheme.body1,
-                        ),
-                      ],
-                    ),
-                  ),
+                  // ListTile(
+                  //   onTap: () {},
+                  //   dense: true,
+                  //   title: Row(
+                  //     children: <Widget>[
+                  //       Icon(
+                  //         UiIcons.placeholder,
+                  //         size: 22,
+                  //         color: Theme.of(context).focusColor,
+                  //       ),
+                  //       SizedBox(width: 10),
+                  //       Text(
+                  //         'Shipping Adresses',
+                  //         style: Theme.of(context).textTheme.body1,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   ListTile(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/Languages');
+                      // Navigator.of(context).pushNamed('/Languages');
                     },
                     dense: true,
                     title: Row(
@@ -321,7 +340,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                   ),
                   ListTile(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/Help');
+                      _openMembershipPage();
                     },
                     dense: true,
                     title: Row(
