@@ -80,6 +80,26 @@ class Topic {
     }
   }
 
+  static Future<bool> postTopic(String title, String description) async {
+    final String token = await User.getToken();
+    final User user = await User().getUser();
+
+    var mapData = Map();
+    mapData["userId"] = user.id;
+    mapData["title"] = title;
+    mapData["description"] = description;
+    String data = json.encode(mapData);
+
+    await http.post(Constants.WORDPRESS_URL + 'mobile/v2/topic',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+    return true;
+  }
+
   static String checkDate(DateTime dateToCheck) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);

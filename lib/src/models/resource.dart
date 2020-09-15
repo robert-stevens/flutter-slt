@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'dart:convert';
+import 'dart:io';
+import 'package:path/path.dart';
+
 import 'package:shareLearnTeach/src/utils/constants.dart';
 import 'package:shareLearnTeach/src/models/category.dart';
 import 'package:shareLearnTeach/src/models/user.dart';
@@ -101,6 +105,49 @@ class Resource {
       // then throw an exception.
       throw Exception('Failed to save resources');
     }
+  }
+
+  static Future<dynamic> post(String title, String description,
+      Map<String, String> files, String categoryId) async {
+    List<Map> attachments = toBase64(files);
+    final String token = await User.getToken();
+    final User user = await User().getUser();
+
+    var mapData = Map();
+    mapData["userId"] = user.id;
+    mapData["title"] = title;
+    mapData["description"] = description;
+    mapData["attachments"] = attachments;
+    mapData["categoryId"] = categoryId;
+    String data = json.encode(mapData);
+
+    await http.post(Constants.WORDPRESS_URL + 'mobile/v2/resource',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+    // print(response.statusCode);
+    // print(response.body);
+
+    return true;
+  }
+
+  static List<Map> toBase64(Map<String, String> files) {
+    List<Map> s = new List<Map>();
+    if (files.length > 0)
+      files.forEach((key, element) {
+        print('key: $key');
+        print('element: $element');
+        Map a = {
+          'fileName': basename(key),
+          'encoded': base64Encode(File(element).readAsBytesSync())
+        };
+        s.add(a);
+      });
+    return s;
   }
 
   static String getCategoryName(int id, List<Category> categoryList) {

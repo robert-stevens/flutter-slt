@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,7 @@ class Category {
 
     // print(response.statusCode);
     // print(response.body);
+    // inspect(response.body);
 
     if (response.statusCode == 200) {
       final SharedPreferences preferences =

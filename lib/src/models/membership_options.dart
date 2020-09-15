@@ -20,7 +20,7 @@ class MembershipOptionList {
           level: '2',
           title: '1 USER BUNDLE',
           subTitle: '£19.99 A Year - 1 Users (SINGLE USER)',
-          price: 1.00,
+          price: 19.99,
           benefits: [
             "FULL ACCESS OF SITE",
             "PREMIUM RESOURCES",

@@ -3,6 +3,7 @@ import 'package:shareLearnTeach/src/models/route_argument.dart';
 // import 'package:shareLearnTeach/src/models/topic.dart';
 import 'package:shareLearnTeach/src/screens/Categorie.dart';
 import 'package:shareLearnTeach/src/screens/account.dart';
+import 'package:shareLearnTeach/src/screens/post.dart';
 import 'package:shareLearnTeach/src/screens/Categories.dart';
 // import 'package:shareLearnTeach/src/screens/tabs/Resources.dart';
 // import 'package:shareLearnTeach/src/screens/forums/index.dart';
@@ -29,9 +30,13 @@ class RouteGenerator {
       case '/SignIn':
         return MaterialPageRoute<dynamic>(builder: (_) => SignInWidget());
       case '/SignUp':
+        // return webview widget
         return MaterialPageRoute<dynamic>(builder: (_) => SignUpWidget());
       case '/Account':
         return MaterialPageRoute<dynamic>(builder: (_) => AccountWidget());
+      case '/Post':
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => PostWidget(postType: 'Status'));
       case '/Tabs':
         return MaterialPageRoute<dynamic>(
             builder: (_) => TabsWidget(

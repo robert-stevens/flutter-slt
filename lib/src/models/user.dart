@@ -101,6 +101,44 @@ class User {
     }
   }
 
+  Future<dynamic> getPaymentIntent(int amount) async {
+    final http.Response response = await http
+        .get(Constants.WORDPRESS_URL + 'mobile/v2/stripe?amount=$amount');
+    return json.decode(response.body);
+  }
+
+  Future<http.Response> register(
+      String name,
+      String surname,
+      String email,
+      String password,
+      String membershipId,
+      double amount,
+      String paymentIntentId) async {
+    const String _apiEndpoint = Constants.WORDPRESS_URL + 'mobile/v2/register';
+    final http.Response response = await http.post(_apiEndpoint,
+        headers: _headers,
+        body: json.encode({
+          'name': name,
+          'surname': surname,
+          'email': email,
+          'password': password,
+          'membershipId': membershipId,
+          'amount': amount,
+          'paymentIntentId': paymentIntentId
+        }));
+    print('statusCode: ${response.statusCode}');
+    print('body: ${response.body}');
+    if (response.statusCode == 200) {
+      print('loginUser fired');
+      return await loginUser(email, password);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      return response;
+    }
+  }
+
   static void saveFavourites(dynamic favourites) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     dynamic user = json.decode(preferences.getString('user'));

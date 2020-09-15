@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:shareLearnTeach/config/ui_icons.dart';
 // import 'package:shareLearnTeach/src/widgets/SocialMediaWidget.dart';
 import 'package:shareLearnTeach/src/models/user.dart';
-import 'package:shareLearnTeach/src/models/category.dart';
 import 'package:shareLearnTeach/src/screens/web_view.dart';
 // import 'package:shareLearnTeach/src/screens/tabs.dart';
 
@@ -36,12 +35,11 @@ class _SignInWidgetState extends State<SignInWidget> {
       //for testing
       // _email = 'RobertStevens';
       // _password = 'Rob5@W3bpr355';
-      _email = 'flinders';
-      _password = '5t3V3n@5t';
+      // _email = 'flinders';
+      // _password = '5t3V3n@5t';
 
       final dynamic response = await user.loginUser(_email, _password);
       if (response.statusCode == 200) {
-        await Category.getAndSaveCategories();
         setState(() {
           _isLoading = false;
         });
@@ -58,16 +56,6 @@ class _SignInWidgetState extends State<SignInWidget> {
       // handle form errors
     }
   }
-
-  // void _openMembershipPage() {
-  //   Navigator.of(context)
-  //       .push(MaterialPageRoute<void>(builder: (BuildContext context) {
-  //     return const WebViewWebPage(
-  //         title: 'Upgrade Now',
-  //         url:
-  //             'https://sharelearnteach.com/membership-account/membership-levels/');
-  //   }));
-  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -243,7 +231,15 @@ class _SignInWidgetState extends State<SignInWidget> {
             ),
             FlatButton(
               onPressed: () {
-                Navigator.of(context).pushNamed('/SignUp');
+                // Navigator.of(context).pushNamed('/SignUp');
+
+                Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (BuildContext context) {
+                  return const WebViewWebPage(
+                      title: 'Premium Membership Options',
+                      url:
+                          'https://sharelearnteach.com/membership-account/pe-resources-membership-levels/');
+                }));
               },
               child: RichText(
                 text: TextSpan(

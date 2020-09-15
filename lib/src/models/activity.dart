@@ -139,6 +139,40 @@ class Activity {
     return favs;
   }
 
+  static Future<dynamic> createStatus(String status) async {
+    final String token = await User.getToken();
+    final User user = await User().getUser();
+
+    var mapData = Map();
+    mapData["userId"] = user.id;
+    mapData["status"] = status;
+    String data = json.encode(mapData);
+
+    final http.Response response = await http.post(
+        Constants.WORDPRESS_URL + 'mobile/v2/status',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+    // return new Activity(
+    //   id: 0,
+    //   userAvatar: user.avatar,
+    //   username: user.displayName,
+    //   title: status,
+    //   likesCount: 0,
+    //   commentsCount: 0,
+    //   link: null,
+    //   linkToShare: null,
+    //   type: 'status',
+    //   secondaryItemId: 0,
+    //   description: '',
+    // );
+    return true;
+  }
+
   static String toJson(int favouriteId, String userId) {
     var mapData = Map();
     mapData["user_id"] = userId;

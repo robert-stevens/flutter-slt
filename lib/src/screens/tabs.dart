@@ -1,7 +1,7 @@
 import 'package:shareLearnTeach/config/ui_icons.dart';
 import 'package:shareLearnTeach/src/models/category.dart';
 import 'package:shareLearnTeach/src/models/user.dart';
-// import 'package:shareLearnTeach/src/screens/home.dart';
+import 'package:shareLearnTeach/src/screens/post.dart';
 // import 'package:shareLearnTeach/src/screens/chat.dart';
 // import 'package:shareLearnTeach/src/screens/favorites.dart';
 import 'package:shareLearnTeach/src/screens/tabs/activity.dart';
@@ -19,6 +19,7 @@ class TabsWidget extends StatefulWidget {
   final List<Category> categoryList;
   int selectedTab = 2;
   String currentTitle = 'Activity';
+  String postType = 'Status';
   String _profilePicture;
   User _user;
   Widget currentPage = ActivityWidget();
@@ -61,10 +62,12 @@ class _TabsWidgetState extends State<TabsWidget> {
       switch (tabItem) {
         case 0:
           widget.currentTitle = 'Activity';
+          widget.postType = 'Status';
           widget.currentPage = ActivityWidget(user: widget._user);
           break;
         case 1:
           widget.currentTitle = 'Resources';
+          widget.postType = 'Resource';
           widget.currentPage = ResourcesWidget(
             user: widget._user,
             categoryList: widget.categoryList,
@@ -72,6 +75,7 @@ class _TabsWidgetState extends State<TabsWidget> {
           break;
         case 2:
           widget.currentTitle = 'Ask the PE-ople';
+          widget.postType = 'Topic';
           widget.currentPage = ForumsScreen(
             user: widget._user,
           );
@@ -117,6 +121,26 @@ class _TabsWidgetState extends State<TabsWidget> {
         ],
       ),
       body: widget.currentPage,
+      floatingActionButton: new FloatingActionButton(
+          // elevation: 0.0,
+          child: new Icon(Icons.add),
+          backgroundColor: Theme.of(context).accentColor,
+          onPressed: () async {
+            var isLoggedIn = await User().isLoggedIn(context);
+            if (!isLoggedIn) {
+              return;
+            }
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PostWidget(postType: widget.postType),
+              ),
+            );
+            setState(() {
+              widget.currentPage = ActivityWidget(user: widget._user);
+            });
+          }),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).accentColor,
